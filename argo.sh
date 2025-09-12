@@ -11,8 +11,8 @@ if [ "$1" == "install" ]; then
 fi
 
 if [ "$1" == "jobs" ]; then
-    argocd login $(kubectl get svc -n argocd argocd-server | awk '{print $4}' | tail -1) --username admin --password $(argocd admin initial-password -n argocd | head -1) --insecure --grpc-web
+    argocd login $(kubectl get svc -n argocd argocd-server | awk '{print $4}' | tail -1) --username admin --password $(argocd admin initial-password -n argocd | head -1) --insecure --skip-test-tls  --grpc-web
     for app in backend frontend ; do
-    argocd app create ${app} --repo https://github.com/pdevops78/eks-deploy-helm --path chart --upsert --dest-server https://kubernetes.default.svc --dest-namespace default.svc --insecure --skip-test-tls --grpc-web --values values/${app}.yml
+    argocd app create ${app} --repo https://github.com/pdevops78/eks-deploy-helm --path chart --upsert --dest-server https://kubernetes.default.svc --dest-namespace default.svc --insecure  --grpc-web --values values/${app}.yaml
     done
 fi
