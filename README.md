@@ -16,3 +16,7 @@ CHART NAME: external-dns
 CHART VERSION: 9.0.3
 APP VERSION: 0.18.0
 
+
+helm install frontend ./chart -f ./chart/values/frontend.yaml
+You must make sure the Ingress and the target Service are in the same namespace. Kubernetes Ingress does not support cross-namespace routing.
+
