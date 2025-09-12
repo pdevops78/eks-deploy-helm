@@ -5,7 +5,7 @@ component: frontend
 appVersion: f1
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   protocol: TCP
   port: 80
   targetPort: 80
