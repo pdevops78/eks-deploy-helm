@@ -28,6 +28,15 @@ es-kb-quickstart-eck-kibana-kb-http
 5601
 
 
+│ Error: could not download chart: Chart.yaml file is missing
+│
+│   with module.eks.helm_release.external-dns,
+│   on module/eks/external-dns.tf line 1, in resource "helm_release" "external-dns":
+│    1: resource "helm_release" "external-dns" {
+│
+
+
+
 kubectl describe pvc elasticsearch-data-elasticsearch-es-default-0 -n elastic-stack
 Name:          elasticsearch-data-elasticsearch-es-default-0
 Namespace:     elastic-stack

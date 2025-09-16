@@ -3,9 +3,6 @@ kind: Ingress
 metadata:
   name: kibana
   namespace: argocd
-  labels:
-    appName: elastic
-    projectName: {{ .Chart.Name }}
   annotations:
     external-dns.alpha.kubernetes.io/hostname: kibana-dev.pdevops78.online
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
@@ -15,10 +12,10 @@ spec:
     - host: kibana-dev.pdevops78.online
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          - pathType: Prefix
             backend:
               service:
                 name: es-kb-quickstart-eck-kibana-kb-http
                 port:
                   number: 5601
+            path: /
