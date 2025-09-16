@@ -1,0 +1,25 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: elastic
+  namespace: elastic-stack
+  labels:
+    appName: elastic
+    projectName: {{ .Chart.Name }}
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: kibana-dev.pdevops78.online
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: kibana-dev.pdevops78.online
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: es-kb-quickstart-eck-kibana-kb-http
+                port:
+                  number: 5601
+{{- end }}

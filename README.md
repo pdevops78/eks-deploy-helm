@@ -23,5 +23,8 @@ You must make sure the Ingress and the target Service are in the same namespace.
 
 aws-ebs-csi-driver : add-on name
 ebs-csi-controller-sa: service account
+v1.48.0-eksbuild.2
 
+es-kb-quickstart-eck-kibana-kb-http
+5601
 
