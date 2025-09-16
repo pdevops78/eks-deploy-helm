@@ -12,10 +12,10 @@ spec:
     - host: kibana-dev.pdevops78.online
       http:
         paths:
-          - pathType: Prefix
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: es-kb-quickstart-eck-kibana-kb-http
                 port:
                   number: 5601
-            path: /
