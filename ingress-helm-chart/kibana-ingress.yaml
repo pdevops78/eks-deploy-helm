@@ -22,4 +22,3 @@ spec:
                 name: es-kb-quickstart-eck-kibana-kb-http
                 port:
                   number: 5601
-{{- end }}
