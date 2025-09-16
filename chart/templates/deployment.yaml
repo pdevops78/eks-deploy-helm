@@ -22,6 +22,10 @@ spec:
       volumes:
         - name: vault-secret
           emptyDir: { }
+        - name: vault-ebs
+          persistentVolumeClaim:
+          claimName: my-ebs-claim
+
       initContainers:
         - name: get-secret
           image: pavanidevops78/kubernetes:v8
@@ -39,7 +43,7 @@ spec:
               value: "TRUE"
 
           volumeMounts:
-            - name: vault-secret
+            - name: vault-ebs
               mountPath: /data
 
         - name: schema
@@ -53,6 +57,6 @@ spec:
           image: pavanidevops78/kubernetes:{{ .Values.appVersion }}
       {{- if .Values.initContainers.enabled }}
           volumeMounts:
-            - name: vault-secret
+            - name: vault-ebs
               mountPath: /data
           {{- end }}
