@@ -20,3 +20,8 @@ APP VERSION: 0.18.0
 helm upgrade -i frontend ./chart -f ./chart/values/frontend.yaml
 You must make sure the Ingress and the target Service are in the same namespace. Kubernetes Ingress does not support cross-namespace routing.
 
+
+aws-ebs-csi-driver : add-on name
+ebs-csi-controller-sa: service account
+
+
