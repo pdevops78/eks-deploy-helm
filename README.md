@@ -37,6 +37,7 @@ es-kb-quickstart-eck-kibana-kb-http
 
 
 
+
 kubectl describe pvc elasticsearch-data-elasticsearch-es-default-0 -n elastic-stack
 Name:          elasticsearch-data-elasticsearch-es-default-0
 Namespace:     elastic-stack
@@ -64,4 +65,15 @@ Normal   ExternalProvisioning  3s (x6 over 34s)  persistentvolume-controller    
 Warning  ProvisioningFailed    1s (x3 over 24s)  ebs.csi.aws.com_ebs-csi-controller-6b9fb9b668-86l8b_6f33a646-5a6f-430c-a01c-0dc63c117577  failed to provision volume with StorageClass "ebs-sc": rpc error: code = Internal desc = Could not create volume "pvc-7587ebd1-3200-4c86-8836-980887cbe7bf": could not create volume in EC2: operation error EC2: CreateVolume, get identity: get credentials: failed to refresh cached credentials, no EC2 IMDS role found, operation error ec2imds: GetMetadata, request canceled, context deadline exceeded
 
 98.83.155.2 | 172.31.39.155 | t3.medium | https://github.com/pdevops78/eks-deploy-helm
+
+
+
+nstall external dns:
+=====================
+** helm repo add bitnami https://charts.bitnami.com/bitnami
+** helm repo add external-dns https://kubernetes-sigs.github.io/external-dns/
+2541  02/09/25 09:48:24
+helm search repo external-dns --versions | grep 1.17.0
+** helm install external-dns bitnami/external-dns   --namespace default   --set provider=aws   --set aws.region=us-east-1   --set txtOwnerId=my-cluster   --set serviceAccount.name=dns-sa   --set serviceAccount.create=false
+
 
