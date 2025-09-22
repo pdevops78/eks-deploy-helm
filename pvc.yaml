@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: my-ebs-pvc
+  name: elasticsearch-es-default-0
+  namespace: elastic-stack
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
-  storageClassName: my-ebs-sc
+  storageClassName: gp2
