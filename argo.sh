@@ -22,6 +22,9 @@ kubectl apply -f https://download.elastic.co/downloads/eck/3.1.0/operator.yaml
 helm install es-kb-quickstart elastic/eck-stack -n elastic-stack --create-namespace
 
 
+ kubectl patch storageclass gp2 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
+
 
 
 
