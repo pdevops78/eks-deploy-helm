@@ -1,0 +1,35 @@
+apiVersion: logstash.k8s.elastic.co/v1alpha1
+kind: Logstash
+metadata:
+  name: quickstart
+  namespace: elastic-stack
+spec:
+  version: 9.1.4
+  count: 1
+  elasticsearchRefs:
+    - clusterName: qs
+      name: quickstart
+  pipelines:
+    - pipeline.id: main
+      config.string: |
+        input {
+          beats {
+            port => 5044
+          }
+        }
+        output {
+          elasticsearch {
+            hosts => [ "${QS_ES_HOSTS}" ]
+            user => "elastic"
+            password => "$eck_password"
+            ssl_certificate_authorities => "none"
+          }
+        }
+services:
+  - name: beats
+    service:
+      spec:
+        ports:
+          - port: 5044
+            name: "filebeat"
+            protocol: TCP

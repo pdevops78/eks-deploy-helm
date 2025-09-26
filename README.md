@@ -26,7 +26,7 @@ v1.48.0-eksbuild.2
 
 es-kb-quickstart-eck-kibana-kb-http
 5601
-
+ 
 
 │ Error: could not download chart: Chart.yaml file is missing
 │
@@ -84,3 +84,12 @@ helm repo update
 helm install my-release autoscaler/cluster-autoscaler
 --set 'autoDiscovery.clusterName'=<CLUSTER NAME>
 
+
+
+logstash cannot able to connect directly on the eks so with the help of filebeat to send logs on to the kibana
+kubectl get api-resources|grep elastic -i
+kubectl get elasticsearches -A
+kubectl get pods -n elastic-stack --watch
+
+ES_PASSWORD=sed -e "s/ES_PASSWORD/${ES_PASSWORD}/" file.yaml >/tmp/file.yaml
+kubectl apply -f /tmp/file.yaml
