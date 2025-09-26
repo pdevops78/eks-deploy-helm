@@ -9,8 +9,8 @@ spec:
   elasticsearchRef:
     name: quickstart
   config:
-#    output.logstash:
-#      hosts: [ "" ]
+    output.logstash:
+      hosts: [ "logstash-ls-beats:5044" ]
     filebeat.inputs:
       - type: container
         paths:
