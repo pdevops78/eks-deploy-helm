@@ -10,7 +10,7 @@ spec:
     name: elasticsearch
   config:
     output.logstash:
-      hosts: 'logstash-ls-beats:5044'
+      hosts: 'logstash-ls-beats.elastic-stack.svc.cluster.local:5044'
     filebeat.inputs:
       - type: container
         paths:
