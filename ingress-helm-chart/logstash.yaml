@@ -1,14 +1,14 @@
 apiVersion: logstash.k8s.elastic.co/v1alpha1
 kind: Logstash
 metadata:
-  name: quickstart
+  name: logstash
   namespace: elastic-stack
 spec:
-  version: 9.1.4
   count: 1
   elasticsearchRefs:
-    - clusterName: qs
-      name: quickstart
+    - name: elasticsearch
+      clusterName: qs
+  version: 8.14.0
   pipelines:
     - pipeline.id: main
       config.string: |
@@ -19,17 +19,20 @@ spec:
         }
         output {
           elasticsearch {
-            hosts => [ "${QS_ES_HOSTS}" ]
+            hosts => [ "https://elasticsearch-es-http:9200" ]
             user => "elastic"
-            password => "$eck_password"
-            ssl_certificate_authorities => "none"
+            password => "ES_PASSWORD"
+            ssl_verification_mode => "none"
+            index => "%{[kubernetes][container][name]}-%{+YYYY.MM.dd}"
           }
         }
-services:
-  - name: beats
-    service:
-      spec:
-        ports:
-          - port: 5044
-            name: "filebeat"
-            protocol: TCP
+  services:
+    - name: beats
+      service:
+        spec:
+          type: NodePort
+          ports:
+            - port: 5044
+              name: "filebeat"
+              protocol: TCP
+              targetPort: 5044
