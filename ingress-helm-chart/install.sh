@@ -4,17 +4,17 @@ helm upgrade --install ngx-ingres ingress-nginx/ingress-nginx -f ingress.yaml
 kubectl create namespace  argocd
 kubectl apply -f argocd-ingress-dev.yaml -n argocd
 
-while [ true ]; do
-  lb=$(kubectl get ingress -A | grep argocd | awk '{print $4}')
-  nslookup "$lb"
-  if [ $? -eq 0 ]; then
-     echo "$lb is created"
-     break;
-  else
-    echo "$lb not created"
-    sleep 2
-  fi
-done
+#while [ true ]; do
+#  lb=$(kubectl get ingress -A | grep argocd | awk '{print $4}')
+#  nslookup "$lb"
+#  if [ $? -eq 0 ]; then
+#     echo "$lb is created"
+#     break;
+#  else
+#    echo "$lb not created"
+#    sleep 2
+#  fi
+#done
 
 # to install elk
 helm repo add elastic https://helm.elastic.co && helm repo update
