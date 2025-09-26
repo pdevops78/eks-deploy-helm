@@ -27,18 +27,15 @@ echo username - admin
 echo password - $(argocd admin initial-password -n argocd | head -1)
 sleep 1
 
+helm repo add autoscaler https://kubernetes.github.io/autoscaler
+helm upgrade -i node-autoscaler autoscaler/cluster-autoscaler --set 'autoDiscovery.clusterName'=eks-cluster-dev
+
 ES_PASSWORD=$(kubectl get secrets elasticsearch-es-elastic-user -n elastic-stack -o json | jq '.data.elastic' | sed -e 's/"//g' | base64 --decode)
 sed -e "s/ES_PASSWORD/${ES_PASSWORD}/" logstash.yaml >/tmp/logstash.yaml
 kubectl apply -f /tmp/logstash.yaml
-kubectl apply -f filebeat.yaml
+helm upgrade -i filebeat elastic/filebeat -f filebeat.yaml
 echo "eck - username / password : elastic / $(kubectl get secrets elasticsearch-es-elastic-user -n elastic-stack -o json | jq '.data.elastic' | sed -e 's/"//g' | base64 --decode)"
 
-argocd login $(kubectl get ingress -A| grep argocd | awk '{print $4}') --username admin --password $(argocd admin initial-password -n argocd | head -1) --insecure --skip-test-tls --grpc-web
-sleep 1
-for app in backend frontend ; do
-argocd app create ${app} --repo https://github.com/pdevops78/eks-deploy-helm --path chart --upsert --dest-server https://kubernetes.default.svc --dest-namespace default.svc --insecure  --grpc-web --values values/${app}.yaml
-argocd app sync ${app}
-done
 
 
 
