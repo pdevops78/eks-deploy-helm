@@ -28,7 +28,7 @@ echo username - admin
 echo password - $(argocd admin initial-password -n argocd | head -1)
 sleep 1
 
-export eck_password=$(kubectl get secrets elasticsearch-es-elastic-user -n elastic-stack -o json | jq '.data.elastic' | sed -e 's/"//g' | base64 --decode)
+eck_password=$(kubectl get secrets elasticsearch-es-elastic-user -n elastic-stack -o json | jq '.data.elastic' | sed -e 's/"//g' | base64 --decode)
 sleep 1
 echo "eck - username / password : elastic / $eck_password"
 
@@ -36,6 +36,8 @@ argocd login $(kubectl get ingress -A| grep argocd | awk '{print $4}') --usernam
 sleep 1
 for app in backend frontend ; do
 argocd app create ${app} --repo https://github.com/pdevops78/eks-deploy-helm --path chart --upsert --dest-server https://kubernetes.default.svc --dest-namespace default.svc --insecure  --grpc-web --values values/${app}.yaml
+argocd app sync ${app}
+done
 
 
 
