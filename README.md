@@ -93,3 +93,38 @@ kubectl get pods -n elastic-stack --watch
 
 ES_PASSWORD=sed -e "s/ES_PASSWORD/${ES_PASSWORD}/" file.yaml >/tmp/file.yaml
 kubectl apply -f /tmp/file.yaml
+
+
+
+create logs:
+-----------
+click on "Data Views"
+click on "create data view": Enter name and pattern and save
+click on discover
+
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+name: elasticsearch-data-elasticsearch-es-default-0
+namespace: elastic-stack
+resourceVersion: "4066"
+uid: c3ec1890-8042-4c96-a4d2-b3469ca7557a
+nodeAffinity:
+required:
+nodeSelectorTerms:
+- matchExpressions:
+- key: topology.kubernetes.io/zone
+operator: In
+values:
+- us-east-1b
+- key: topology.kubernetes.io/region
+operator: In
+values:
+- us-east-1
+persistentVolumeReclaimPolicy: Delete
+storageClassName: gp2
+volumeMode: Filesystem
+status:
+lastPhaseTransitionTime: "2025-09-27T09:24:45Z"
+phase: Bound
+
